@@ -12,8 +12,8 @@ test:
     - |
         if [ master == $CIRCLE_BRANCH ]; then
           docker run \
-            --env SECRET=secret \
             --env NODE_ENV=test \
+            --env SECRET=secret \
             --env MYSQL_HOST=localhost \
             --env MYSQL_PORT=3306 \
             --env MYSQL_DATABASE=circle_test \
@@ -21,12 +21,12 @@ test:
             --env REDIS_HOST=localhost \
             --env REDIS_PORT=6379 \
             --env REDIS_PARTITION=test \
-            --env CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN
+            --env CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN \
             kkemple/awesome-enterprise-web-service npm run test:coverage
         else
           docker run \
-            --env SECRET=secret \
             --env NODE_ENV=test \
+            --env SECRET=secret \
             --env MYSQL_HOST=localhost \
             --env MYSQL_PORT=3306 \
             --env MYSQL_DATABASE=circle_test \
@@ -40,8 +40,8 @@ test:
         docker run -d \
           -p 8080:8080 \
           -p 8081:8081 \
-          --env SECRET=secret \
           --env NODE_ENV=test \
+          --env SECRET=secret \
           --env MYSQL_HOST=localhost \
           --env MYSQL_PORT=3306 \
           --env MYSQL_DATABASE=circle_test \
