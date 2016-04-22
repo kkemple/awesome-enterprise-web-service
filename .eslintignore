@@ -1,0 +1,4 @@
+lib
+coverage
+db/migrations
+db/seeders

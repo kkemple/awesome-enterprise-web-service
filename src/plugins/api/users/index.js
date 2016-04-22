@@ -1,0 +1,130 @@
+import {
+  createUserHandler,
+  deleteUserHandler,
+  deleteUserByIdHandler,
+  getUserHandler,
+  getUserByIdHandler,
+  getUsersHandler,
+  patchUserHandler,
+  patchUserByIdHandler,
+  putUserHandler,
+  putUserByIdHandler,
+} from './handlers'
+
+import { userPostPayload } from './validations'
+
+module.exports.register = (server, { prefix: prefix = '' } = {}, next) => {
+  const api = server.select('api')
+
+  api.route([
+    {
+      method: 'GET',
+      path: `${prefix}/users`,
+      config: {
+        tags: ['api', 'users'],
+        auth: { scope: ['users:read:all'] },
+        handler: getUsersHandler,
+      },
+    },
+
+    {
+      method: 'GET',
+      path: `${prefix}/users/current`,
+      config: {
+        auth: { scope: ['users:read:current'] },
+        tags: ['api', 'users'],
+        handler: getUserHandler,
+      },
+    },
+
+    {
+      method: 'GET',
+      path: `${prefix}/users/{id}`,
+      config: {
+        tags: ['api', 'users'],
+        auth: { scope: ['users:read'] },
+        handler: getUserByIdHandler,
+      },
+    },
+
+    {
+      method: 'POST',
+      path: `${prefix}/users`,
+      config: {
+        tags: ['api', 'users'],
+        auth: { scope: ['users:create'] },
+        validate: {
+          payload: userPostPayload,
+        },
+        handler: createUserHandler,
+      },
+    },
+
+    {
+      method: 'PATCH',
+      path: `${prefix}/users/current`,
+      config: {
+        tags: ['api', 'users'],
+        auth: { scope: ['users:write', 'users:write:current'] },
+        handler: patchUserHandler,
+      },
+    },
+
+    {
+      method: 'PATCH',
+      path: `${prefix}/users/{id}`,
+      config: {
+        tags: ['api', 'users'],
+        auth: { scope: ['users:write'] },
+        handler: patchUserByIdHandler,
+      },
+    },
+
+    {
+      method: 'PUT',
+      path: `${prefix}/users/current`,
+      config: {
+        tags: ['api', 'users'],
+        auth: { scope: ['users:write', 'users:write:current'] },
+        handler: putUserHandler,
+      },
+    },
+
+    {
+      method: 'PUT',
+      path: `${prefix}/users/{id}`,
+      config: {
+        tags: ['api', 'users'],
+        auth: { scope: ['users:write'] },
+        handler: putUserByIdHandler,
+      },
+    },
+
+    {
+      method: 'DELETE',
+      path: `${prefix}/users/current`,
+      config: {
+        tags: ['api', 'users'],
+        auth: { scope: ['users:delete:current'] },
+        handler: deleteUserHandler,
+      },
+    },
+
+    {
+      method: 'DELETE',
+      path: `${prefix}/users/{id}`,
+      config: {
+        tags: ['api', 'users'],
+        auth: { scope: ['users:delete'] },
+        handler: deleteUserByIdHandler,
+      },
+    },
+  ])
+
+  next()
+}
+
+module.exports.register.attributes = {
+  name: 'api.users',
+  version: '0.0.1',
+}

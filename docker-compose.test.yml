@@ -1,0 +1,44 @@
+db-test:
+  image: mysql
+  environment:
+    MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+    MYSQL_DATABASE: test
+    DNSDOCK_NAME: db
+    DNSDOCK_IMAGE: test
+  ports:
+    - 3306:3306
+
+cache-test:
+  image: redis
+  ports:
+    - 6379:6379
+  environment:
+    DNSDOCK_NAME: cache
+    DNSDOCK_IMAGE: test
+
+graphite-statsd:
+  image: hopsoft/graphite-statsd
+  restart: always
+  ports:
+    - 80:80
+    - 8125:8125/udp
+  environment:
+    DNSDOCK_NAME: statsd
+    DNSDOCK_IMAGE: test
+
+webservice-test:
+  build: .
+  dockerfile: Dockerfile.test
+  command: "npm run test"
+  environment:
+    SECRET: secret
+    NODE_ENV: test
+    MYSQL_HOST: db.test.vm
+    MYSQL_PORT: 3306
+    MYSQL_DATABASE: test
+    MYSQL_USERNAME: root
+    REDIS_HOST: cache.test.vm
+    REDIS_PORT: 6379
+    REDIS_PARTITION: test
+    DNSDOCK_NAME: local
+    DNSDOCK_IMAGE: test

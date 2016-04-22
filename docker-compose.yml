@@ -1,0 +1,52 @@
+db:
+  image: mysql
+  environment:
+    MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+    MYSQL_DATABASE: webservice
+    DNSDOCK_NAME: db
+    DNSDOCK_IMAGE: webservice
+  ports:
+    - 3306:3306
+
+cache:
+  image: redis
+  ports:
+    - 6379:6379
+  environment:
+    DNSDOCK_NAME: cache
+    DNSDOCK_IMAGE: webservice
+
+statsd:
+  image: hopsoft/graphite-statsd
+  restart: always
+  ports:
+    - 80:80
+    - 8125/udp:8125/udp
+    - 8126:8126
+  environment:
+    DNSDOCK_NAME: statsd
+    DNSDOCK_IMAGE: webservice
+
+webservice:
+  build: .
+  command: "npm run serve"
+  ports:
+    - 8080:8080
+    - 8081:8081
+  volumes:
+    - ./src:/usr/src/app/src
+    - ./db:/usr/src/app/db
+  environment:
+    SECRET: secret
+    NODE_ENV: compose
+    MYSQL_HOST: db.webservice.vm
+    MYSQL_PORT: 3306
+    MYSQL_DATABASE: webservice
+    MYSQL_USERNAME: root
+    REDIS_HOST: cache.webservice.vm
+    REDIS_PORT: 6379
+    REDIS_PARTITION: webservice
+    STATSD_HOST: statsd.webservice.vm
+    STATSD_PREFIX: webservice
+    DNSDOCK_NAME: local
+    DNSDOCK_IMAGE: webservice

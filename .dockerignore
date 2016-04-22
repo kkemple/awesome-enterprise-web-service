@@ -1,0 +1,16 @@
+node_modules
+lib
+.git
+.codeclimate.yml
+circle.yml
+docker-build-dev.sh
+docker-build-test.sh
+docker-compose.yml
+docker-compose.test.yml
+docker-run-dev.sh
+docker-run-test.sh
+docker-start-dev-dependencies.sh
+docker-start-test-dependencies.sh
+docker-stop-dev-dependencies.sh
+docker-stop-test-dependencies.sh
+Dockerfile.test
