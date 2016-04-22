@@ -1,78 +1,31 @@
 machine:
   services:
     - docker
-
-dependencies:
-  override:
-    - docker info
-    - docker build -t kkemple/awesome-enterprise-web-service .
+  environment:
+    NODE_ENV: test
+    SECRET: secret
+    MYSQL_HOST: localhost
+    MYSQL_PORT: 3306
+    MYSQL_DATABASE: circle_test
+    MYSQL_USERNAME: ubuntu
+    REDIS_HOST: localhost
+    REDIS_PORT: 6379
+    REDIS_PARTITION: test
 
 test:
-  pre:
-    # - docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name dnsdock -p 172.17.42.1:53:53/udp tonistiigi/dnsdock
-    # - sudo sed -i "s/^bind-address.*/bind-address = 0.0.0.0/g" /etc/mysql/my.cnf
-    # - sudo sed "s/^bind 127.0.0.1/bind 0.0.0.0/" -i /etc/redis/6379.conf
-    - sudo /etc/init.d/mysql stop
-    - sudo /etc/init.d/redis-server stop
-    - |
-        docker run -d \
-          --net="host" \
-          --env MYSQL_DATABASE=circle_test \
-          --env MYSQL_USERNAME=ubuntu \
-          --env MYSQL_ALLOW_EMPTY_PASSWORD=true \
-          mysql
-    - |
-        docker run -d \
-          --net="host" \
-          redis
-    # - docker run -d -p 6378:6379 --env DNSDOCK_NAME=cache --env DNSDOCK_IMAGE=webservice redis
   override:
     - |
         if [ master == $CIRCLE_BRANCH ]; then
-          docker run \
-            --env NODE_ENV=test \
-            --env SECRET=secret \
-            --env MYSQL_HOST=localhost \
-            --env MYSQL_PORT=3306 \
-            --env MYSQL_DATABASE=circle_test \
-            --env MYSQL_USERNAME=ubuntu \
-            --env REDIS_HOST=localhost \
-            --env REDIS_PORT=6379 \
-            --env REDIS_PARTITION=test \
-            --env CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN \
-            kkemple/awesome-enterprise-web-service npm run test:coverage
+          npm run test:coverage
         else
-          docker run \
-            --env NODE_ENV=test \
-            --env SECRET=secret \
-            --env MYSQL_HOST=localhost \
-            --env MYSQL_PORT=3306 \
-            --env MYSQL_DATABASE=circle_test \
-            --env MYSQL_USERNAME=ubuntu \
-            --env REDIS_HOST=localhost \
-            --env REDIS_PORT=6379 \
-            --env REDIS_PARTITION=test \
-            kkemple/awesome-enterprise-web-service npm run test
+          npm run test
         fi
-    - |
-        docker run -d \
-          -p 8080:8080 \
-          -p 8081:8081 \
-          --env NODE_ENV=test \
-          --env SECRET=secret \
-          --env MYSQL_HOST=localhost \
-          --env MYSQL_PORT=3306 \
-          --env MYSQL_DATABASE=circle_test \
-          --env MYSQL_USERNAME=ubuntu \
-          --env REDIS_HOST=localhost \
-          --env REDIS_PORT=6379 \
-          --env REDIS_PARTITION=test \
-          kkemple/awesome-enterprise-web-service; sleep 10
-    - curl --retry 10 --retry-delay 5 -v http://localhost:8080/api/healthcheck
+    # - curl --retry 10 --retry-delay 5 -v http://localhost:8080/api/healthcheck
 
 deployment:
   hub:
     branch: master
     commands:
+      - docker build -t kkemple/awesome-enterprise-web-service:$CIRCLE_SHA1 .
       - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - docker push kkemple/awesome-enterprise-web-service

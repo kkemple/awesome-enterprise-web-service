@@ -22,7 +22,7 @@ module.exports.register = (server, { prefix: prefix = '' } = {}, next) => {
       path: `${prefix}/users`,
       config: {
         tags: ['api', 'users'],
-        auth: { scope: ['users:read:all'] },
+        auth: { scope: ['users:read'] },
         handler: getUsersHandler,
       },
     },
@@ -31,7 +31,7 @@ module.exports.register = (server, { prefix: prefix = '' } = {}, next) => {
       method: 'GET',
       path: `${prefix}/users/current`,
       config: {
-        auth: { scope: ['users:read:current'] },
+        auth: { scope: ['users:read:current', 'users:read'] },
         tags: ['api', 'users'],
         handler: getUserHandler,
       },
