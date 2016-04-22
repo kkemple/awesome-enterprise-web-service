@@ -8,25 +8,24 @@ dependencies:
     - docker build -t kkemple/awesome-enterprise-web-service .
 
 test:
-  pre:
-    # - sudo sed -i "s/^bind-address.*/bind-address = 0.0.0.0/g" /etc/mysql/my.cnf
-    # - sudo /etc/init.d/mysql restart
-    # - sudo sed "s/^bind 127.0.0.1/bind 0.0.0.0/" -i /etc/redis/6379.conf
-    # - sudo /etc/init.d/redis-server restart
   override:
-    - docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name dnsdock -p 172.17.42.1:53:53/udp tonistiigi/dnsdock
-    - docker run -d -p 3305:3306 --env MYSQL_DATABASE=test --env MYSQL_ALLOW_EMPTY_PASSWORD=true --env DNSDOCK_NAME=db --env DNSDOCK_IMAGE=webservice mysql
-    - docker run -d -p 6378:6379 --env DNSDOCK_NAME=cache --env DNSDOCK_IMAGE=webservice redis
+    # - docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name dnsdock -p 172.17.42.1:53:53/udp tonistiigi/dnsdock
+    # - docker run -d -p 3305:3306 --env MYSQL_DATABASE=test --env MYSQL_ALLOW_EMPTY_PASSWORD=true --env DNSDOCK_NAME=db --env DNSDOCK_IMAGE=webservice mysql
+    # - docker run -d -p 6378:6379 --env DNSDOCK_NAME=cache --env DNSDOCK_IMAGE=webservice redis
+    - sudo sed -i "s/^bind-address.*/bind-address = 0.0.0.0/g" /etc/mysql/my.cnf
+    - sudo /etc/init.d/mysql restart
+    - sudo sed "s/^bind 127.0.0.1/bind 0.0.0.0/" -i /etc/redis/6379.conf
+    - sudo /etc/init.d/redis-server restart
     - |
         if [ master == $CIRCLE_BRANCH ]; then
           docker run \
             --env NODE_ENV=test \
             --env SECRET=secret \
-            --env MYSQL_HOST=db.webservice.docker \
+            --env MYSQL_HOST=localhost \
             --env MYSQL_PORT=3306 \
             --env MYSQL_DATABASE=test \
             --env MYSQL_USERNAME=root \
-            --env REDIS_HOST=cache.webservice.docker \
+            --env REDIS_HOST=localhost \
             --env REDIS_PORT=6378 \
             --env REDIS_PARTITION=test \
             --env DNSDOCK_NAME=api \
@@ -37,11 +36,11 @@ test:
           docker run \
             --env NODE_ENV=test \
             --env SECRET=secret \
-            --env MYSQL_HOST=db.webservice.docker \
+            --env MYSQL_HOST=localhost \
             --env MYSQL_PORT=3305 \
             --env MYSQL_DATABASE=test \
             --env MYSQL_USERNAME=root \
-            --env REDIS_HOST=cache.webservice.docker \
+            --env REDIS_HOST=localhost \
             --env REDIS_PORT=6379 \
             --env REDIS_PARTITION=test \
             --env DNSDOCK_NAME=api \
@@ -54,11 +53,11 @@ test:
           -p 8081:8081 \
           --env NODE_ENV=test \
           --env SECRET=secret \
-          --env MYSQL_HOST=db.webservice.docker \
+          --env MYSQL_HOST=localhost \
           --env MYSQL_PORT=3306 \
           --env MYSQL_DATABASE=test \
           --env MYSQL_USERNAME=root \
-          --env REDIS_HOST=cache.webservice.docker \
+          --env REDIS_HOST=localhost \
           --env REDIS_PORT=6379 \
           --env REDIS_PARTITION=test \
           --env DNSDOCK_NAME=api \
