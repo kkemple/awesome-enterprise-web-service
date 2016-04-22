@@ -26,7 +26,7 @@ devtools start
 ```
 
 
-This will start the dev Docker machine and also start up DnsDock and DnsMasq. With these we can assign domain names to our containers.
+This will start the dev Docker machine and also start up [dnsdock](https://github.com/tonistiigi/dnsdock) and [dnsmasq](https://github.com/jpillora/docker-dnsmasq). With these we can assign domain names to our containers.
 
 > Devtools also adjusts your host routing table and sets up a resolver for routing the `.vm` domain to the Docker Machine IP. This lets you access all of your containers from both the host and within the Docker machine by the same domain name. This makes working with distributed systems a lot easier and keeps apps cleaner by removing the need for Docker specific environment variables.
 
