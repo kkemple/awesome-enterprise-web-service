@@ -13,17 +13,23 @@ import Sequelize from 'sequelize'
 // Model factory methods
 import createUserModel from './user'
 import createTokenModel from './token'
+import { InvalidDatabaseError } from './errors'
 
 
 // register method for Hapi plugin
 module.exports.register = (server, {
-  database: database = undefined,
-  username: username = undefined,
-  password: password = undefined,
+  database: database,
+  username: username = null,
+  password: password = null,
   host: host = 'localhost',
   dialect: dialect = 'mysql',
   pool: pool = {},
 }, next) => {
+  if (!database) {
+    next(new InvalidDatabaseError())
+    return
+  }
+
   // build sequelize config object, pass server.log so logging is uniform
   const config = {
     host,
