@@ -9,24 +9,24 @@ dependencies:
 
 test:
   pre:
-    # - sudo sed -i "s/^bind-address.*/bind-address = 0.0.0.0/g" /etc/mysql/my.cnf
-    # - sudo /etc/init.d/mysql restart
-    # - sudo sed "s/^bind 127.0.0.1/bind 0.0.0.0/" -i /etc/redis/6379.conf
-    # - sudo /etc/init.d/redis-server restart
-  override:
     # - docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name dnsdock -p 172.17.42.1:53:53/udp tonistiigi/dnsdock
-    - |
-        docker run -d \
-          --net="host" \
-          --env MYSQL_DATABASE=circle_test \
-          --env MYSQL_USERNAME=ubuntu \
-          --env MYSQL_ALLOW_EMPTY_PASSWORD=true \
-          mysql
-    - |
-        docker run -d \
-          --net="host" \
-          redis
+    # - sudo sed -i "s/^bind-address.*/bind-address = 0.0.0.0/g" /etc/mysql/my.cnf
+    # - sudo sed "s/^bind 127.0.0.1/bind 0.0.0.0/" -i /etc/redis/6379.conf
+    - sudo /etc/init.d/mysql stop
+    - sudo /etc/init.d/redis-server stop
+      - |
+          docker run -d \
+            --net="host" \
+            --env MYSQL_DATABASE=circle_test \
+            --env MYSQL_USERNAME=ubuntu \
+            --env MYSQL_ALLOW_EMPTY_PASSWORD=true \
+            mysql
+      - |
+          docker run -d \
+            --net="host" \
+            redis
     # - docker run -d -p 6378:6379 --env DNSDOCK_NAME=cache --env DNSDOCK_IMAGE=webservice redis
+  override:
     - |
         if [ master == $CIRCLE_BRANCH ]; then
           docker run \

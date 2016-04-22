@@ -11,6 +11,8 @@
     "db:seed:all": "sequelize db:seed:all",
     "db:seed:undo": "sequelize db:seed:undo",
     "db:seed:undo:all": "sequelize db:seed:undo:all",
+    "migration:create": "sequelize migration:create",
+    "seed:create": "sequelize seed:create",
     "serve": "nodemon",
     "lint": "eslint .",
     "start": "node lib/index.js",
