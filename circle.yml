@@ -5,9 +5,6 @@ machine:
 dependencies:
   override:
     - docker info
-    - docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name dnsdock -p 172.17.42.1:53:53/udp tonistiigi/dnsdock
-    - docker run -d mysql -p 3306:3306 --env MYSQL_DATABASE=test --env MYSQL_ALLOW_EMPTY_PASSWORD=true --env DNSDOCK_NAME=db --env DNSDOCK_IMAGE=webservice
-    - docker run -d redis -p 6379:6379 --env DNSDOCK_NAME=cache --env DNSDOCK_IMAGE=webservice
     - docker build -t kkemple/awesome-enterprise-web-service .
 
 test:
@@ -17,6 +14,9 @@ test:
     # - sudo sed "s/^bind 127.0.0.1/bind 0.0.0.0/" -i /etc/redis/6379.conf
     # - sudo /etc/init.d/redis-server restart
   override:
+    - docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name dnsdock -p 172.17.42.1:53:53/udp tonistiigi/dnsdock
+    - docker run -d -p 3306:3306 --env MYSQL_DATABASE=test --env MYSQL_ALLOW_EMPTY_PASSWORD=true --env DNSDOCK_NAME=db --env DNSDOCK_IMAGE=webservice mysql
+    - docker run -d -p 6379:6379 --env DNSDOCK_NAME=cache --env DNSDOCK_IMAGE=webservice redis
     - |
         if [ master == $CIRCLE_BRANCH ]; then
           docker run \
