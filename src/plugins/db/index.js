@@ -17,23 +17,19 @@ import createTokenModel from './token'
 
 // register method for Hapi plugin
 module.exports.register = (server, {
+  host: host = 'localhost',
   database: database = undefined,
   username: username = undefined,
   password: password = undefined,
-  host: host = 'localhost',
   dialect: dialect = 'mysql',
-  pool: pool = {},
 }, next) => {
   // build sequelize config object, pass server.log so logging is uniform
   const config = {
     host,
     dialect,
+    username,
+    password,
     logging: server.log.bind(server, dialect),
-    pool: assign({
-      max: 5,
-      min: 0,
-      idle: 10000,
-    }, pool),
   }
 
   // get instance of sequelize and models
