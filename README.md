@@ -70,6 +70,15 @@ The web service is a Hapi application with an API and socket support. It uses th
 }
 ```
 
+#### Plugins
+
+##### Auth
+The auth plugin is responsible for managing authentication and authorization. There is support for both JWT (JSON Web Token) and Basic authentication.
+To access a secure endpoint via basic auth, the client must either add the basic auth header or format the url with auth information included. If using JWTs, the client must send the token in the `Authorization` header.
+
+> This plugin also manages scopes that are attached to `User` roles. Using roles allows for finer grained control over API access. The rules engine is very simple (really just a lookup) but it could easily be replaced. For more info look at `src/plugins/api/auth/scopes.js`.
+
+
 ### Data Management
 
 This project is set to you mysql but that could easily be replaced by Postgres or MongoDB. Sequelize is used for migrations/seeds and as an ORM internally (see DB plugin for more info).
@@ -98,9 +107,62 @@ See [sequelize docs](http://docs.sequelizejs.com/en/latest/docs/migrations/) for
 
 ### Monitoring and Metrics
 
+This app includes New Relic for application monitoring, just add your application token in `./newrelic.js` and adjust the app name.
+
+#### Custom Metrics
+
+The `server` object also has Statsd availble via `server.statsd`. Every request is also tracked by statsd. Read the docs for the [hapi-statd](https://github.com/mac-/hapi-statsd) plugin for all availble options.
+
+**Example**
+
+```javascript
+{
+  method: 'POST',
+  path: '/authenticate',
+  config: {
+    tags: ['api', 'auth'],
+    auth: false,
+    validate: {
+      payload: authenticationPayload,
+    },
+    handler(req, reply) {
+      const { email, password } = req.payload
+      const { User, Token } = req.server.app.models
+
+      User.authenticate(email, password)
+        .then((user) => Token.tokenize(user))
+        .then((token) => {
+          req.server.statsd.increment(`login.success.user.${user.id}`)
+
+          reply({
+            success: true,
+            payload: { token },
+          })
+        })
+        .catch((err) => {
+          req.server.statsd.increment(`login.fail.user.${user.id}`)
+
+          reply({
+            success: false,
+            error: err.name,
+            message: err.message,
+            stack: err.stack,
+          }).code(401)
+        })
+    },
+  },
+}
+```
+
 ### Deployment
 
 ### API Documentation
+Documentation for the API is availble via [hapi-swagger](https://github.com/glennjones/hapi-swagger). Once the web service is running you can view the documentation at
+
+```bash
+//<your_app_host>:<your_app_port>/documentation
+```
+> [Swagger.io](http://swagger.io)
 
 ### NPM Run Scripts
 
