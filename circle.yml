@@ -13,7 +13,7 @@ dependencies:
 
 test:
   pre:
-    - sudo sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
+    - sudo sed -i "s/^bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
     - sudo /etc/init.d/mysql restart
     - sudo sed "s/^bind 127.0.0.1/bind 0.0.0.0/" -i /etc/redis/6379.conf
     - sudo /etc/init.d/redis-server restart
@@ -23,11 +23,11 @@ test:
           docker run \
             --env NODE_ENV=test \
             --env SECRET=secret \
-            --env MYSQL_HOST=0.0.0.0 \
+            --env MYSQL_HOST=localhost \
             --env MYSQL_PORT=3306 \
             --env MYSQL_DATABASE=circle_test \
             --env MYSQL_USERNAME=ubuntu \
-            --env REDIS_HOST=0.0.0.0 \
+            --env REDIS_HOST=localhost \
             --env REDIS_PORT=6379 \
             --env REDIS_PARTITION=test \
             --env CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN \
@@ -36,11 +36,11 @@ test:
           docker run \
             --env NODE_ENV=test \
             --env SECRET=secret \
-            --env MYSQL_HOST=0.0.0.0 \
+            --env MYSQL_HOST=localhost \
             --env MYSQL_PORT=3306 \
             --env MYSQL_DATABASE=circle_test \
             --env MYSQL_USERNAME=ubuntu \
-            --env REDIS_HOST=0.0.0.0 \
+            --env REDIS_HOST=localhost \
             --env REDIS_PORT=6379 \
             --env REDIS_PARTITION=test \
             kkemple/awesome-enterprise-web-service npm run test
@@ -51,11 +51,11 @@ test:
           -p 8081:8081 \
           --env NODE_ENV=test \
           --env SECRET=secret \
-          --env MYSQL_HOST=0.0.0.0 \
+          --env MYSQL_HOST=localhost \
           --env MYSQL_PORT=3306 \
           --env MYSQL_DATABASE=circle_test \
           --env MYSQL_USERNAME=ubuntu \
-          --env REDIS_HOST=0.0.0.0 \
+          --env REDIS_HOST=localhost \
           --env REDIS_PORT=6379 \
           --env REDIS_PARTITION=test \
           kkemple/awesome-enterprise-web-service; sleep 10
