@@ -29,5 +29,5 @@ deployment:
     branch: master
     commands:
       - docker build -t kkemple/awesome-enterprise-web-service:$CIRCLE_SHA1 .
-      - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD -e $DOCKER_EMAIL
       - docker push kkemple/awesome-enterprise-web-service

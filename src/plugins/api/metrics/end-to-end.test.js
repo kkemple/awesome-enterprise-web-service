@@ -72,9 +72,9 @@ test('[End to End] metrics endpoints', (t) => {
           t.true(response.result.upTime, 'metrics returns upTime')
           t.true(response.result.totalMem, 'metrics returns totalMem')
           t.true(response.result.loadAvg, 'metrics returns loadAvg')
-          t.true(response.result.eventLoopDelay, 'metrics returns eventLoopDelay')
-          t.true(response.result.heapUsed, 'metrics returns heapUsed')
-          t.true(response.result.memUsed, 'metrics returns memUsed')
+          t.true(response.result.serverLoad.eventLoopDelay, 'metrics returns eventLoopDelay')
+          t.true(response.result.serverLoad.heapUsed, 'metrics returns heapUsed')
+          t.true(response.result.serverLoad.memUsed, 'metrics returns memUsed')
         })
       })
 

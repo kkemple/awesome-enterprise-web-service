@@ -50,9 +50,11 @@ module.exports.register = (server, { prefix: prefix = '' } = {}, next) => {
             upTime: stringifySeconds(convertUptimeToSeconds(process.uptime())),
             totalMem: stringifyMegabytes(convertBytesToMegaBytes(os.totalmem())),
             loadAvg: stringifyLoadAvg(os.loadavg()),
-            eventLoopDelay: stringifyMilliseconds(server.load.eventLoopDelay),
-            heapUsed: stringifyMegabytes(convertBytesToMegaBytes(server.load.heapUsed)),
-            memUsed: stringifyMegabytes(convertBytesToMegaBytes(server.load.rss)),
+            serverLoad: {
+              eventLoopDelay: stringifyMilliseconds(server.load.eventLoopDelay),
+              heapUsed: stringifyMegabytes(convertBytesToMegaBytes(server.load.heapUsed)),
+              memUsed: stringifyMegabytes(convertBytesToMegaBytes(server.load.rss)),
+            },
           })
         },
       },
