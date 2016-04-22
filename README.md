@@ -55,25 +55,6 @@ $ ./docker-run-dev.sh
 ```
 
 
-## Environment Variables
-```bash
-HOST
-HTTP_PORT
-TCP_PORT
-SECRET
-NODE_ENV
-MYSQL_HOST
-MYSQL_PORT
-MYSQL_DATABASE
-MYSQL_USERNAME
-REDIS_HOST
-REDIS_PORT
-REDIS_PARTITION
-STATSD_HOST
-STATSD_PREFIX
-```
-
-
 ### Web Service and Plugins
 
 The web service is a Hapi application with an API and socket support. It uses the following plugins:
@@ -195,4 +176,23 @@ See [sequelize docs](http://docs.sequelizejs.com/en/latest/docs/migrations/) for
   "sinon": "^1.17.3",
   "tape": "^4.5.1"
 }
+```
+
+## Environment Variables
+
+```bash
+HOST
+HTTP_PORT
+TCP_PORT
+SECRET
+NODE_ENV
+MYSQL_HOST
+MYSQL_PORT
+MYSQL_DATABASE
+MYSQL_USERNAME
+REDIS_HOST
+REDIS_PORT
+REDIS_PARTITION
+STATSD_HOST
+STATSD_PREFIX
 ```

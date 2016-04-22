@@ -14,17 +14,17 @@ test:
     # - sudo sed "s/^bind 127.0.0.1/bind 0.0.0.0/" -i /etc/redis/6379.conf
     - sudo /etc/init.d/mysql stop
     - sudo /etc/init.d/redis-server stop
-      - |
-          docker run -d \
-            --net="host" \
-            --env MYSQL_DATABASE=circle_test \
-            --env MYSQL_USERNAME=ubuntu \
-            --env MYSQL_ALLOW_EMPTY_PASSWORD=true \
-            mysql
-      - |
-          docker run -d \
-            --net="host" \
-            redis
+    - |
+        docker run -d \
+          --net="host" \
+          --env MYSQL_DATABASE=circle_test \
+          --env MYSQL_USERNAME=ubuntu \
+          --env MYSQL_ALLOW_EMPTY_PASSWORD=true \
+          mysql
+    - |
+        docker run -d \
+          --net="host" \
+          redis
     # - docker run -d -p 6378:6379 --env DNSDOCK_NAME=cache --env DNSDOCK_IMAGE=webservice redis
   override:
     - |
