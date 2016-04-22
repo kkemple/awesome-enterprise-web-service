@@ -5,6 +5,10 @@ machine:
 dependencies:
   override:
     - docker info
+    - docker pull mysql
+    - docker pull redis
+    - docker run -d mysql -p 3306:3306 --env MYSQL_DATABASE=test --env MYSQL_ALLOW_EMPTY_PASSWORD=true
+    - docker run -d redis -p 6379:6379
     - docker build -t kkemple/awesome-enterprise-web-service .
 
 test:
@@ -16,8 +20,8 @@ test:
             --env SECRET=secret \
             --env MYSQL_HOST=localhost \
             --env MYSQL_PORT=3306 \
-            --env MYSQL_DATABASE=circle_test \
-            --env MYSQL_USERNAME=ubuntu \
+            --env MYSQL_DATABASE=test \
+            --env MYSQL_USERNAME=root \
             --env REDIS_HOST=localhost \
             --env REDIS_PORT=6379 \
             --env REDIS_PARTITION=test \
@@ -29,8 +33,8 @@ test:
             --env SECRET=secret \
             --env MYSQL_HOST=localhost \
             --env MYSQL_PORT=3306 \
-            --env MYSQL_DATABASE=circle_test \
-            --env MYSQL_USERNAME=ubuntu \
+            --env MYSQL_DATABASE=test \
+            --env MYSQL_USERNAME=root \
             --env REDIS_HOST=localhost \
             --env REDIS_PORT=6379 \
             --env REDIS_PARTITION=test \
