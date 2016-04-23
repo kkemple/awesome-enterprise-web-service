@@ -146,7 +146,7 @@ The sockets module is responsible for setting up secure connections to clients v
 
 
 ##### Hasher
-The hasher plugin adds a [server method](http://hapijs.com/tutorials/server-methods) for hashing passwords.
+The hasher plugin adds a [server method](http://hapijs.com/tutorials/server-methods) for hashing passwords (`server.methods.hash`).
 
 
 ##### Auth
