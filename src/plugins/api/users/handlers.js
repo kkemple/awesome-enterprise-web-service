@@ -5,7 +5,7 @@ export function getUserHandler(req, reply) {
 
   reply({
     success: true,
-    payload: user,
+    payload: { user },
   })
 }
 
@@ -18,7 +18,7 @@ export function getUserByIdHandler(req, reply) {
 
       reply({
         success: true,
-        payload: user,
+        payload: { user },
       })
     })
     .catch(UserNotFoundError, (err) => reply({
@@ -41,7 +41,7 @@ export function getUsersHandler(req, reply) {
   User.findAll()
     .then((users) => reply({
       success: true,
-      payload: users,
+      payload: { users },
     }))
 }
 
@@ -51,7 +51,7 @@ export function createUserHandler(req, reply) {
   User.create(req.payload)
     .then((user) => reply({
       success: true,
-      payload: user,
+      payload: { user },
     }))
     .catch((err) => reply({
       success: false,
@@ -67,7 +67,7 @@ export function patchUserHandler(req, reply) {
   user.update(req.payload)
     .then((user) => reply({
       success: true,
-      payload: user,
+      payload: { user },
     }))
     .catch((err) => reply({
       success: false,
@@ -87,7 +87,7 @@ export function patchUserByIdHandler(req, reply) {
     })
     .then((user) => reply({
       success: true,
-      payload: user,
+      payload: { user },
     }))
     .catch(UserNotFoundError, (err) => reply({
       success: false,
@@ -110,7 +110,7 @@ export function putUserHandler(req, reply) {
     .then(user.reload)
     .then((user) => reply({
       success: true,
-      payload: user,
+      payload: { user },
     }))
     .catch((err) => reply({
       success: false,
@@ -130,7 +130,7 @@ export function putUserByIdHandler(req, reply) {
     })
     .then((user) => reply({
       success: true,
-      payload: user,
+      payload: { user },
     }))
     .catch(UserNotFoundError, (err) => reply({
       success: false,

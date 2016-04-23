@@ -47,10 +47,6 @@ module.exports = {
       updatedAt: {
         type: Sequelize.DATE,
       },
-
-      deletedAt: {
-        type: Sequelize.DATE,
-      },
     }
 
     const tokenTableConfig = {
@@ -82,10 +78,6 @@ module.exports = {
       },
 
       updatedAt: {
-        type: Sequelize.DATE,
-      },
-
-      deletedAt: {
         type: Sequelize.DATE,
       },
     }

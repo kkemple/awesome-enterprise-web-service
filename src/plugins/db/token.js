@@ -35,9 +35,6 @@ export default function createTokenModel(sequelize, hashMethod, secret) {
     // add timestamps
     timestamps: true,
 
-    // soft deletes - updates deletedAt col instead of removing data
-    paranoid: true,
-
     // static class methods
     classMethods: {
       tokenize(user) {

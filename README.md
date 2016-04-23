@@ -7,55 +7,72 @@ An enterprise grade web service example
 [![Issue Count](https://codeclimate.com/github/kkemple/awesome-enterprise-web-service/badges/issue_count.svg)](https://codeclimate.com/github/kkemple/awesome-enterprise-web-service)
 [![Circle CI](https://circleci.com/gh/kkemple/awesome-enterprise-web-service.svg?style=svg)](https://circleci.com/gh/kkemple/awesome-enterprise-web-service)
 
-There are plenty of web app examples on the web, but a lot of them leave you in the dark when it comes to things like data management, authorization and token distrabution. There are virtually no solid examples of that from top to bottom. This project aims to be a starting point that allows you to spin up enterprise ready applications with minimal effort.
+There are plenty of web application examples on the internet, but a lot of them leave you in the dark when it comes to things like data management, authorization and token distribution. There are virtually no solid examples of that from top to bottom. This project aims to be a starting point that allows you to spin up enterprise ready applications with minimal effort.
 
 ## Getting Started
 
 ### Project Setup
 
-Install Docker and DNS management tools via Phase2 Devtools
+Install Docker and DNS management tools via Phase2 `devtools`. Devtools is essentially a Docker machine manager... on steriods.
 
-Devtools makes working with Docker locally a much easier process. If you already have a Docker Machine running stop it first, and then run...
+Some of the benefits of using `devtools` are:
+
+```yaml
+- Persistent Data w/ Back Up Support
+- DNS Management between host and virtual machine
+- Domain name aliasing for easier container-to-container communication **AND** host-to-virtual communication (http://<prefix>.<domain>.vm)
+- Faster file syncing via NFS
+```
+
+> Devtools will also set up a resolver for routing the `.vm` domain to the Docker Machine IP. This lets you access all of your containers from both the host and within the Docker machine by the same domain name. This makes working with distributed systems a lot easier and keeps apps cleaner by removing the need for Docker specific environment variables.
+
 
 ```bash
 brew tap phase2/devtools
-brew install phase2/docker-machine
-brew install phase2/docker-compose
-brew install phase2/docker
+
+brew install phase2/devtools
+
+devtools doctor
+
+# if problems from doctor command install recommended binaries
+brew install phase2/devtools/docker-machine
+brew install phase2/devtools/docker-compose
+brew install phase2/devtools/docker
+
+# stop docker-machine dev if it's already running
 devtools start
 ```
 
-
-This will start the dev Docker machine and also start up [dnsdock](https://github.com/tonistiigi/dnsdock) and [dnsmasq](https://github.com/jpillora/docker-dnsmasq). With these we can assign domain names to our containers.
-
-> Devtools also adjusts your host routing table and sets up a resolver for routing the `.vm` domain to the Docker Machine IP. This lets you access all of your containers from both the host and within the Docker machine by the same domain name. This makes working with distributed systems a lot easier and keeps apps cleaner by removing the need for Docker specific environment variables.
+> If you run `docker ps` you will see you already have two running containers, dnsdock and dnsmasq.
 
 
 #### Run Tests
 
 ```bash
-# start docker machine via devtools (devtools start)
+# start docker machine via devtools
+devtools start
 
 # stop dev dependencies if running
 # ./docker-stop-dev-dependencies.sh
 
-$ ./docker-start-test-dependencies.sh
-$ ./docker-run-test.sh
+./docker-start-test-dependencies.sh
+./docker-run-test.sh
 ```
 
 
 #### Run Docker Services
 
 ```bash
-# start docker machine via devtools (devtools start)
+# start docker machine via devtools
+devtools start
 
 # stop test dependencies if running
 # ./docker-stop-test-dependencies.sh
 
-$ ./docker-start-dev-dependencies.sh
-$ ./docker-run-dev.sh
-$ docker-compose run webservice npm run db:migrate
-$ docker-compose run webservice npm run db:seed:all
+./docker-start-dev-dependencies.sh
+./docker-run-dev.sh
+docker-compose run webservice npm run db:migrate
+docker-compose run webservice npm run db:seed:all
 ```
 
 _Endpoints_
@@ -226,6 +243,14 @@ All available migration and seed NPM commands...
 ```
 
 See [sequelize docs](http://docs.sequelizejs.com/en/latest/docs/migrations/) for more info.
+
+---
+
+### Configuration
+
+App configuration lives in `src/config.js`. In `src/index.js` the `NODE_ENV` is used to pull the config for the proper environment. However, you will notice that except for the local environment, most config properties reference environment variables. This is to protect your sensitive information.
+
+> The configuration for this app was left simple because most companies will have their own way of handling configuration, you just need to make sure you adjust `src/index.js` accordingly.
 
 
 ### Authentication and Authorization

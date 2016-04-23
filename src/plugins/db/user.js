@@ -81,9 +81,6 @@ export default function createUserModel(sequelize, hashMethod) {
     // add timestamps
     timestamps: true,
 
-    // soft deletes - updates deletedAt col instead of removing data
-    paranoid: true,
-
     // add model event hooks
     hooks: {
 
