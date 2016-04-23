@@ -35,6 +35,52 @@ export function getUserByIdHandler(req, reply) {
     }).code(500))
 }
 
+export function getActiveTokensByUserIdHandler(req, reply) {
+  const { User } = req.server.app.models
+
+  User.findById(req.params.id)
+    .then((user) => user.activeTokens())
+    .then((activeTokens) => reply({
+      success: true,
+      payload: { activeTokens: activeTokens || [] },
+    }))
+    .catch(UserNotFoundError, (err) => reply({
+      success: false,
+      error: err.name,
+      message: err.message,
+      stack: err.stack,
+    }).code(400))
+    .catch((err) => reply({
+      success: false,
+      error: err.name,
+      message: err.message,
+      stack: err.stack,
+    }).code(500))
+}
+
+export function getInactiveTokensByUserIdHandler(req, reply) {
+  const { User } = req.server.app.models
+
+  User.findById(req.params.id)
+    .then((user) => user.inactiveTokens())
+    .then((inactiveTokens) => reply({
+      success: true,
+      payload: { inactiveTokens: inactiveTokens || [] },
+    }))
+    .catch(UserNotFoundError, (err) => reply({
+      success: false,
+      error: err.name,
+      message: err.message,
+      stack: err.stack,
+    }).code(400))
+    .catch((err) => reply({
+      success: false,
+      error: err.name,
+      message: err.message,
+      stack: err.stack,
+    }).code(500))
+}
+
 export function getUsersHandler(req, reply) {
   const { User } = req.server.app.models
 
