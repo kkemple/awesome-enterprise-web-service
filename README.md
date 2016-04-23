@@ -167,7 +167,7 @@ This plugin exposes metrics endpoints for gathering monitoring information about
 _Endpoints_
 
 ```bash
-GET /api/healthcheck (scopes: ['metrics:read'], auth: disabled)
+GET /api/healthcheck (auth: disabled)
 GET /api/metrics (scopes: ['metrics:read'])
 GET /api/metrics/uptime (scopes: ['metrics:read'])
 GET /api/metrics/totalmem (scopes: ['metrics:read'])
