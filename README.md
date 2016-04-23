@@ -13,7 +13,7 @@ There are plenty of web application examples on the internet, but a lot of them 
 
 ### Project Setup
 
-**Install Docker and DNS management tools via Phase2 `devtools`**
+**Install Docker and DNS management tools via Phase2 [devtools](http://phase2.github.io/devtools/)**
 
 Devtools is essentially a Docker machine manager... on steriods.
 
