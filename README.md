@@ -13,7 +13,9 @@ There are plenty of web application examples on the internet, but a lot of them 
 
 ### Project Setup
 
-Install Docker and DNS management tools via Phase2 `devtools`. Devtools is essentially a Docker machine manager... on steriods.
+**Install Docker and DNS management tools via Phase2 `devtools`**
+
+Devtools is essentially a Docker machine manager... on steriods.
 
 Some of the benefits of using `devtools` are:
 
