@@ -1,4 +1,4 @@
-# Awesome Enterprise Web service
+# Awesome Enterprise Web Service
 
 An enterprise grade web service example
 
