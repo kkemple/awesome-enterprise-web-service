@@ -52,7 +52,7 @@ devtools start
 
 ```bash
 # start docker machine via devtools
-devtools start
+# devtools start
 
 # stop dev dependencies if running
 # ./docker-stop-dev-dependencies.sh
@@ -66,15 +66,13 @@ devtools start
 
 ```bash
 # start docker machine via devtools
-devtools start
+# devtools start
 
 # stop test dependencies if running
 # ./docker-stop-test-dependencies.sh
 
 ./docker-start-dev-dependencies.sh
 ./docker-run-dev.sh
-docker-compose run webservice npm run db:migrate
-docker-compose run webservice npm run db:seed:all
 ```
 
 _Endpoints_
