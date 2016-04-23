@@ -110,6 +110,7 @@ The API is set to run on port `8080` and sockets on `8081` by default. This can 
 - [hapi-auth-basic](https://github.com/hapijs/hapi-auth-basic)
 - [hapi-auth-jwt2](https://github.com/dwyl/hapi-auth-jwt2)
 - [hapi-statsd](https://github.com/mac-/hapi-statsd)
+- [hapi-swagger](https://github.com/glennjones/hapi-swagger)
 - [inert](https://github.com/hapijs/inert)
 - [vision](https://github.com/hapijs/vision)
 
@@ -270,7 +271,7 @@ You can get as granular as you want with scopes. Scopes associate to a `User`'s 
 _Scopes_
 
 ```json
-{{
+{
   "user": [
     "users:read:current",
     "users:write:current",
