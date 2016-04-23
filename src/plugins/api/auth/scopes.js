@@ -5,6 +5,8 @@ module.exports = {
   ],
 
   admin: [
+    'users:read:current',
+    'users:write:current',
     'users:read',
     'users:write',
     'users:create',
@@ -12,6 +14,8 @@ module.exports = {
   ],
 
   super: [
+    'users:read:current',
+    'users:write:current',
     'users:read',
     'users:write',
     'users:create',

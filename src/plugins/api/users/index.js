@@ -7,6 +7,8 @@ import {
   getUsersHandler,
   getActiveTokensByUserIdHandler,
   getInactiveTokensByUserIdHandler,
+  getActiveTokensHandler,
+  getInactiveTokensHandler,
   patchUserHandler,
   patchUserByIdHandler,
   putUserHandler,
@@ -36,6 +38,26 @@ module.exports.register = (server, { prefix: prefix = '' } = {}, next) => {
         auth: { scope: ['users:read:current', 'users:read'] },
         tags: ['api', 'users'],
         handler: getUserHandler,
+      },
+    },
+
+    {
+      method: 'GET',
+      path: `${prefix}/users/current/tokens/active`,
+      config: {
+        tags: ['api', 'users'],
+        auth: { scope: ['users:read'] },
+        handler: getActiveTokensHandler,
+      },
+    },
+
+    {
+      method: 'GET',
+      path: `${prefix}/users/current/tokens/inactive`,
+      config: {
+        tags: ['api', 'users'],
+        auth: { scope: ['users:read'] },
+        handler: getInactiveTokensHandler,
       },
     },
 

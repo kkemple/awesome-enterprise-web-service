@@ -206,8 +206,12 @@ _Endpoints_
 ```bash
 GET /api/users (scopes: ['users:read'])
 POST /api/users (scopes: ['users:create'])
-GET /api/users/current (scopes: ['users:read:current', 'users:read'])
+GET /api/users/current (scopes: ['users:read:current'])
+GET /api/users/current/tokens/active (scopes: ['users:read:current'])
+GET /api/users/current/tokens/inactive (scopes: ['users:read:current'])
 GET /api/users/{id} (scopes: ['users:read'])
+GET /api/users/{id}/tokens/active (scopes: ['users:read'])
+GET /api/users/{id}/tokens/inactive (scopes: ['users:read'])
 PATCH /api/users/{id} (scopes: ['users:write'])
 PUT /api/users/{id} (scopes: ['users:write'])
 DELETE /api/users/{id} (scopes: ['users:delete'])
@@ -217,7 +221,7 @@ ___
 
 ### Data Management
 
-This project is set to you mysql but that could easily be replaced by Postgres or MongoDB. Sequelize is used for migrations/seeds and as an ORM internally (see DB plugin for more info). There is a default migration in `db/migrations` and a corresponding seeder file in `db/seeders`. To run them:
+This project is set to use mysql but that could easily be replaced by Postgres or MongoDB. Sequelize is used for migrations/seeds and as an ORM internally (see DB plugin for more info). There is a default migration in `db/migrations` and a corresponding seeder file in `db/seeders`. To run them:
 
 ```bash
 npm run db:migrate
@@ -266,13 +270,15 @@ You can get as granular as you want with scopes. Scopes associate to a `User`'s 
 _Scopes_
 
 ```json
-{
+{{
   "user": [
     "users:read:current",
     "users:write:current",
   ],
 
   "admin": [
+    "users:read:current",
+    "users:write:current",
     "users:read",
     "users:write",
     "users:create",
@@ -280,6 +286,8 @@ _Scopes_
   ],
 
   "super": [
+    "users:read:current",
+    "users:write:current",
     "users:read",
     "users:write",
     "users:create",
