@@ -15,6 +15,7 @@
     "seed:create": "sequelize seed:create",
     "serve": "nodemon",
     "lint": "eslint .",
+    "vulnerabilities": "nsp check",
     "start": "node lib/index.js",
     "compile": "rimraf lib && babel src --out-dir lib --source-maps inline",
     "pretest": "npm run lint",
@@ -36,7 +37,6 @@
   "homepage": "https://github.com/awesome-enterprise-web-service#readme",
   "dependencies": {
     "bcryptjs": "^2.3.0",
-    "bluebird": "^3.3.5",
     "catbox-redis": "^1.0.10",
     "good": "^6.6.0",
     "good-console": "^5.3.1",
@@ -72,6 +72,7 @@
     "istanbul": "^1.0.0-alpha.2",
     "nock": "^8.0.0",
     "nodemon": "^1.9.1",
+    "nsp": "^2.3.1",
     "rimraf": "^2.5.2",
     "sinon": "^1.17.3",
     "tape": "^4.5.1"

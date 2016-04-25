@@ -6,7 +6,6 @@
 
 import omit from 'lodash.omit'
 import bcrypt from 'bcryptjs'
-import Promise from 'bluebird'
 import { INTEGER, STRING, ENUM } from 'sequelize/lib/data-types'
 
 import { AuthenticationError } from './errors'
@@ -29,7 +28,14 @@ function comparePassword(password, user) {
 
 export default function createUserModel(sequelize, hashMethod) {
   // promisify hash method (Hapi server methods use callback pattern)
-  const asyncHash = Promise.promisify(hashMethod)
+  function asyncHash(password) {
+    return new Promise((res, rej) => {
+      hashMethod(password, (err, hash) => {
+        if (err) return rej(err)
+        return res(hash)
+      })
+    })
+  }
 
   const modelConfig = {
     id: {

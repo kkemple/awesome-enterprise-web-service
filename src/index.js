@@ -5,7 +5,6 @@
 // require('newrelic')
 
 import Hapi from 'hapi'
-import Promise from 'bluebird'
 import RedisEngine from 'catbox-redis'
 
 // load server config

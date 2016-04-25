@@ -1,7 +1,5 @@
 'use strict';
 
-const Promise = require('bluebird')
-
 module.exports = {
   up: function (queryInterface, Sequelize) {
     const userTableConfig = {
@@ -82,13 +80,12 @@ module.exports = {
       },
     }
 
-    return Promise.each([
-      { tableName: 'users', config: userTableConfig },
-      { tableName: 'tokens', config: tokenTableConfig },
-    ], (settings) => queryInterface.createTable(settings.tableName, settings.config))
+    return queryInterface.createTable('users', userTableConfig)
+      .then(() => queryInterface.createTable('tokens', tokenTableConfig))
   },
 
   down: function (queryInterface, Sequelize) {
-    return Promise.each(['tokens', 'users'], (table) => queryInterface.dropTable(table))
+    return queryInterface.dropTable('tokens')
+      .then(() => queryInterface.dropTable('users'))
   }
 };

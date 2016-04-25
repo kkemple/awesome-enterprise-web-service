@@ -86,6 +86,25 @@ http://cache.webservice.vm:6379 #Redis
 http://statsd.webservice.vm:8126 #statsd admin interface (no GUI)
 http://statsd.webservice.vm #Graphite Interface for viewing statsd metrics
 ```
+
+
+#### Running without Docker
+Make sure you have `mysql`, `redis`, and `statsd*` available, either locally or remotely. Then make sure you have all of the required environment variables set.
+
+_* optional_
+
+Run `npm run db:migrate && npm run db:seed:all` to populate the database.
+
+Run `npm serve` to start `nodemon`
+
+_Endpoints_
+
+```bash
+http://localhost:8080 #API
+http://localhost:8080/documentation #API Documentation
+http://localhost:8081 #Sockets
+```
+
 ___
 
 ### Web Service and Plugins
@@ -300,7 +319,7 @@ _Scopes_
 ___
 
 
-### Code Quality and Testing
+### Code Quality, Testing, and Security
 
 In order to keep the code clean and well structured ESLint is used. Rules are based off of [Airbnb's](https://github.com/airbnb/javascript) style guide with some very minor modifications, see `.eslintrc` for config.
 
@@ -308,11 +327,14 @@ Testing is done with `tape`, `sinon`, and `nock` for mocking HTTP calls. There a
 
 > You will need a database and redis instance running to run full test suite
 
+Vulnerabilities are also checked for via `nsp`. NSP is the Node Security Project module for checking your application's dependencies against the database of known NPM module vulrnerabilities.
+
 _NPM Test Scripts_
 
 ```json
 {
   "lint": "eslint .",
+  "vulnerabilities": "nsp check",
   "pretest": "npm run lint",
   "test": "npm run db:migrate && npm run db:seed:all && istanbul cover tape -- -r babel-register \"src/**/*.test.js\"",
   "test:coverage": "npm run test && codeclimate-test-reporter < coverage/lcov.info",
@@ -403,7 +425,12 @@ ___
 
 
 ### Deployment
-Deployment is really just a matter or preference. This application is using [Circle CI](https://circleci.com/gh/kkemple/awesome-enterprise-web-service) to run tests, build docker container, and push it to Docker Hub. See `circle.yml` for build, test, and deploy configuration.
+This application is using [Circle CI](https://circleci.com/gh/kkemple/awesome-enterprise-web-service). The web service is containerized and then has the full test suite run against it. Then it is started and pinged via the `/api/healthcheck` route.
+
+Using Docker containers gives you a single artifact that you can pass through your build pipeline and release into production. It also gives you the added benefit of having backups of every release, with dependencies included. _#leftpad_
+
+
+> See `circle.yml` for build, test, and deploy configuration.
 
 ___
 
@@ -423,6 +450,7 @@ ___
   "seed:create": "sequelize seed:create",
   "serve": "nodemon",
   "lint": "eslint .",
+  "vulnerabilites": "nsp check",
   "start": "node lib/index.js",
   "compile": "rimraf lib && babel src --out-dir lib --source-maps inline",
   "pretest": "npm run lint",
@@ -440,7 +468,6 @@ ___
 ```json
 {
   "bcryptjs": "^2.3.0",
-  "bluebird": "^3.3.5",
   "catbox-redis": "^1.0.10",
   "good": "^6.6.0",
   "good-console": "^5.3.1",
@@ -481,6 +508,7 @@ ___
   "istanbul": "^1.0.0-alpha.2",
   "nock": "^8.0.0",
   "nodemon": "^1.9.1",
+  "nsp": "^2.3.1",
   "rimraf": "^2.5.2",
   "sinon": "^1.17.3",
   "tape": "^4.5.1"

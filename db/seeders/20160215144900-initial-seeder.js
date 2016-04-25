@@ -2,7 +2,6 @@
 
 const assign = require('lodash.assign')
 const bcrypt = require('bcryptjs')
-const Promise = require('bluebird')
 const uuid = require('uuid')
 
 module.exports = {
