@@ -90,6 +90,9 @@ function start() {
         socketsServer.log('websocket', `Websocket server running at ${socketsServer.info.uri}`)
       })
     })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 // initiate server
