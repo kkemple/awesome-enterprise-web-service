@@ -31,6 +31,7 @@ test('[End to End] auth endpoints', (t) => {
 
   server.app.secret = process.env.SECRET
 
+  /* eslint-disable global-require */
   server.register([
     { register: require('hapi-auth-basic') },
     { register: require('hapi-auth-jwt2') },

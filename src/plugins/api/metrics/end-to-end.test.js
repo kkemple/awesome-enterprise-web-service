@@ -32,6 +32,7 @@ test('[End to End] metrics endpoints', (t) => {
     username: process.env.MYSQL_USERNAME,
   }
 
+  /* eslint-disable global-require */
   server.register([
     { register: require('hapi-auth-basic') },
     { register: require('hapi-auth-jwt2') },

@@ -22,17 +22,15 @@ module.exports = {
       },
     },
     logging: {
-      reporters: [
-        {
-          reporter: require('good-console'),
-          events: {
-            log: '*',
-            response: '*',
-            error: '*',
-            ops: '*',
+      reporters: {
+        console: [
+          {
+            module: 'good-console',
+            args: [{ log: '*', response: '*' }],
           },
-        },
-      ],
+          'stdout',
+        ],
+      },
     },
     db: {
       host: 'db.webservice.vm',
@@ -63,17 +61,15 @@ module.exports = {
       },
     },
     logging: {
-      reporters: [
-        {
-          reporter: require('good-console'),
-          events: {
-            log: '*',
-            response: '*',
-            error: '*',
-            ops: '*',
+      reporters: {
+        console: [
+          {
+            module: 'good-console',
+            args: [{ log: '*', response: '*' }],
           },
-        },
-      ],
+          'stdout',
+        ],
+      },
     },
     db: {
       host: process.env.MYSQL_HOST,
@@ -141,17 +137,15 @@ module.exports = {
       },
     },
     logging: {
-      reporters: [
-        {
-          reporter: require('good-console'),
-          events: {
-            log: '*',
-            response: '*',
-            error: '*',
-            ops: '*',
+      reporters: {
+        console: [
+          {
+            module: 'good-console',
+            args: [{ log: '*', response: '*' }],
           },
-        },
-      ],
+          'stdout',
+        ],
+      },
     },
     db: {
       host: process.env.MYSQL_HOST,
@@ -185,17 +179,15 @@ module.exports = {
       },
     },
     logging: {
-      reporters: [
-        {
-          reporter: require('good-console'),
-          events: {
-            log: '*',
-            response: '*',
-            error: '*',
-            ops: '*',
+      reporters: {
+        console: [
+          {
+            module: 'good-console',
+            args: [{ log: '*', response: '*' }],
           },
-        },
-      ],
+          'stdout',
+        ],
+      },
     },
     db: {
       host: process.env.MYSQL_HOST,

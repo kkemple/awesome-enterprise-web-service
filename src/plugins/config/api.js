@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 export default (options = {}) => [
   { register: require('inert') },
   { register: require('vision') },

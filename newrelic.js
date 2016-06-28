@@ -1,3 +1,5 @@
+import pkg from './package'
+
 /**
  * New Relic agent configuration.
  *
@@ -6,13 +8,17 @@
  */
 exports.config = {
   /**
+   * Whether or not to send data to New Relic (still boots up).
+   */
+  agent_enabled: false,
+  /**
    * Array of application names.
    */
-  app_name: ['awesome-enterprise-web-service'],
+  app_name: [pkg.name],
   /**
    * Your New Relic license key.
    */
-  license_key: 'XXXX-XXXX-XXXX-XXXX',
+  license_key: process.env.NEWRELIC_LICENSE_KEY,
   logging: {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing

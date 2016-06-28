@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 export default (options = {}) => [
   { register: require('hapi-statsd'), options: options.statsd },
   { register: require('good'), options: options.logging },

@@ -19,7 +19,8 @@ dependencies:
 
 test:
   override:
-    - docker run kkemple/awesome-enterprise-web-service:$CIRCLE_SHA1 npm run vulnerabilities
+    - |
+      docker run kkemple/awesome-enterprise-web-service:$CIRCLE_SHA1 npm run audit || true
     - |
       if [[ "$CIRCLE_BRANCH" == "master" ]]; then
         docker run \

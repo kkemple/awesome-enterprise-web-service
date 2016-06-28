@@ -29,7 +29,7 @@ statsd:
 
 webservice:
   build: .
-  command: "npm run serve"
+  command: "npm start"
   ports:
     - 8080:8080
     - 8081:8081
