@@ -103,7 +103,7 @@ module.exports = {
       },
     },
     logging: {
-      reporters: [],
+      reporters: {},
     },
     db: {
       host: process.env.MYSQL_HOST,
