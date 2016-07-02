@@ -6,6 +6,7 @@ An enterprise grade web service example
 [![Test Coverage](https://codeclimate.com/github/kkemple/awesome-enterprise-web-service/badges/coverage.svg)](https://codeclimate.com/github/kkemple/awesome-enterprise-web-service/coverage)
 [![Issue Count](https://codeclimate.com/github/kkemple/awesome-enterprise-web-service/badges/issue_count.svg)](https://codeclimate.com/github/kkemple/awesome-enterprise-web-service)
 [![Circle CI](https://circleci.com/gh/kkemple/awesome-enterprise-web-service.svg?style=svg)](https://circleci.com/gh/kkemple/awesome-enterprise-web-service)
+[![codecov](https://codecov.io/gh/kkemple/awesome-enterprise-web-service/branch/master/graph/badge.svg)](https://codecov.io/gh/kkemple/awesome-enterprise-web-service)
 
 There are plenty of web application examples on the internet, but a lot of them leave you in the dark when it comes to things like data management, authorization and token distribution. There are virtually no solid examples of that from top to bottom. This project aims to be a starting point that allows you to spin up enterprise ready applications with minimal effort.
 
