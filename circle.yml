@@ -35,6 +35,7 @@ test:
           --env REDIS_PORT=$REDIS_PORT \
           --env REDIS_PARTITION=$REDIS_PARTITION \
           --env CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN \
+          --env CODECOV_TOKEN=$CODECOV_TOKEN \
           kkemple/awesome-enterprise-web-service:$CIRCLE_SHA1 npm run test:coverage
       fi
     - |
