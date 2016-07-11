@@ -1,5 +1,7 @@
 # Awesome Enterprise Web Service
 
+[![Join the chat at https://gitter.im/kkemple/awesome-enterprise-web-service](https://badges.gitter.im/kkemple/awesome-enterprise-web-service.svg)](https://gitter.im/kkemple/awesome-enterprise-web-service?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 An enterprise grade web service example
 
 [![Code Climate](https://codeclimate.com/github/kkemple/awesome-enterprise-web-service/badges/gpa.svg)](https://codeclimate.com/github/kkemple/awesome-enterprise-web-service)
