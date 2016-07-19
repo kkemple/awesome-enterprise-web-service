@@ -44,7 +44,7 @@ function jwt(decoded, request, next) {
     .then((user) => next(null, true, {
       user,
       scope: scopes[user.get('role')],
-      authType: 'basic',
+      authType: 'jwt',
     }))
     .catch((err) => {
       request.log('error', err)
