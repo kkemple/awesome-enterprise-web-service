@@ -128,7 +128,7 @@ export default function createUserModel(sequelize, hashMethod) {
             if (user) return comparePassword(password, user)
 
             // if no user found error out
-            throw new AuthenticationError('User not found!')
+            return Promise.reject(new AuthenticationError('User not found!'))
           })
       },
     },
