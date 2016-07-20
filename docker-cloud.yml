@@ -1,44 +1,42 @@
-db:
-  image: mysql
-  environment:
-    MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
-    MYSQL_DATABASE: webservice
-  expose:
-    - "3306"
-
 cache:
-  image: redis
   expose:
-    - "6379"
-
-statsd:
-  image: hopsoft/graphite-statsd
-  restart: always
-  expose:
-    - "80"
-    - "8125/udp"
-    - "8126"
-
-webservice:
-  image: kkemple/awesome-enterprise-web-service
-  command: "npm start"
-  autoredeploy: true
-  links:
-    - db:db
-    - cache:cache
-    - statsd:statsd
-  expose:
-    - "8080"
-    - "8081"
+    - '6379'
+  image: 'redis:latest'
+db:
   environment:
-    SECRET: secret
-    NODE_ENV: compose
-    MYSQL_HOST: db
-    MYSQL_PORT: 3306
-    MYSQL_DATABASE: webservice
-    MYSQL_USERNAME: root
-    REDIS_HOST: cache
-    REDIS_PORT: 6379
-    REDIS_PARTITION: webservice
-    STATSD_HOST: statsd
-    STATSD_PREFIX: webservice
+    - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    - MYSQL_DATABASE=webservice
+  expose:
+    - '3306'
+  image: 'mysql:latest'
+statsd:
+  expose:
+    - '80'
+    - 8125/udp
+    - '8126'
+  image: 'hopsoft/graphite-statsd:latest'
+  restart: always
+webservice:
+  autoredeploy: true
+  command: npm start
+  environment:
+    - MYSQL_DATABASE=webservice
+    - MYSQL_HOST=db
+    - MYSQL_PORT=3306
+    - MYSQL_USERNAME=root
+    - NODE_ENV=compose
+    - REDIS_HOST=cache
+    - REDIS_PARTITION=webservice
+    - REDIS_PORT=6379
+    - SECRET=secret
+    - STATSD_HOST=statsd
+    - STATSD_PREFIX=webservice
+  image: 'kkemple/awesome-enterprise-web-service:latest'
+  links:
+    - cache
+    - db
+    - statsd
+  ports:
+    - '80:8080'
+    - '8081:8081'
+  restart: always
