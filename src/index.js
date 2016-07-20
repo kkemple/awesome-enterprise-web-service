@@ -59,13 +59,11 @@ function start() {
 
   // set the connections
   server.connection({
-    host: envConfig.host,
     port: envConfig.httpPort,
     labels: ['api'],
   })
 
   server.connection({
-    host: envConfig.host,
     port: envConfig.tcpPort,
     labels: ['sockets'],
   })

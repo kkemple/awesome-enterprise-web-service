@@ -12,7 +12,6 @@ import pkg from '../package.json'
 module.exports = {
   local: {
     secret: 'secret',
-    host: 'localhost',
     httpPort: 8080,
     tcpPort: 8081,
     swagger: {
@@ -51,7 +50,6 @@ module.exports = {
 
   compose: {
     secret: 'secret',
-    host: 'local.webservice.vm',
     httpPort: 8080,
     tcpPort: 8081,
     swagger: {
@@ -93,7 +91,6 @@ module.exports = {
 
   test: {
     secret: 'secret',
-    host: 'localhost',
     httpPort: 8080,
     tcpPort: 8081,
     swagger: {
@@ -127,7 +124,6 @@ module.exports = {
 
   development: {
     secret: process.env.SECRET,
-    host: process.env.HOST,
     httpPort: process.env.HTTP_PORT,
     tcpPort: process.env.TCP_PORT,
     swagger: {
@@ -169,7 +165,6 @@ module.exports = {
 
   production: {
     secret: process.env.SECRET,
-    host: process.env.HOST,
     httpPort: process.env.HTTP_PORT,
     tcpPort: process.env.TCP_PORT,
     swagger: {
