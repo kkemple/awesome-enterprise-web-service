@@ -122,14 +122,23 @@ export default function createUserModel(sequelize, hashMethod) {
         if (!password) throw new AuthenticationError('Password is required!')
 
         // get user by email
-        return this.findOne({ where: { email } })
-          .then((user) => {
-            // compare password if user is found
-            if (user) return comparePassword(password, user)
+        return new Promise((res, rej) => {
+          this.findOne({ where: { email } })
+            .then((user) => {
+              // compare password if user is found
+              if (user) {
+                comparePassword(password, user)
+                  .then((user) => res(user))
+                  .catch((err) => rej(err))
 
-            // if no user found error out
-            return Promise.reject(new AuthenticationError('User not found!'))
-          })
+                return
+              }
+
+              // if no user found error out
+              rej(new AuthenticationError('User not found!'))
+            })
+            .catch((err) => rej(err))
+        })
       },
     },
 
