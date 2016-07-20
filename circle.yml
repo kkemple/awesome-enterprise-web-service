@@ -76,5 +76,5 @@ deployment:
     commands:
       - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD -e $DOCKER_EMAIL
       - docker push kkemple/awesome-enterprise-web-service
-      - docker tag -f kkemple/awesome-enterprise-web-service:latest
+      - docker build -t kkemple/awesome-enterprise-web-service:latest .
       - docker push kkemple/awesome-enterprise-web-service:latest

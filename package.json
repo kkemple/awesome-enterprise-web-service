@@ -19,7 +19,7 @@
     "package": "npm shrinkwrap --dev && node bin/fix-shrinkwrap && shrinkpack",
     "pretest": "npm run lint",
     "pretest:unit": "npm run lint",
-    "start": "node lib/index.js",
+    "start": "npm run db:migrate && npm run db:seed:all && node lib/index.js",
     "test": "npm run db:migrate && npm run db:seed:all && istanbul cover tape -- -r babel-register \"src/**/*.test.js\"",
     "test:coverage": "npm run test && codeclimate-test-reporter < coverage/lcov.info && codecov",
     "test:unit": "tape -r babel-register \"src/**/unit.test.js\""
