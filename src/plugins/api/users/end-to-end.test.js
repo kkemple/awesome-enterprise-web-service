@@ -128,51 +128,51 @@ test('[End to End] API.Users Plugin Integration with Hapi', (t) => {
         })
       })
 
-      t.test('GET /users/current/tokens/active', (t) => {
-        t.test('with good credentials', (assert) => {
-          server.inject({
-            url: '/api/users/current/tokens/active',
-            headers,
-          }, (response) => {
-            const { activeTokens } = response.result.payload
-            assert.equal(Array.isArray(activeTokens), true, 'returns active tokens')
-            assert.equal(activeTokens.length >= 1, true, 'contains one or more tokens')
-            assert.end()
-          })
-        })
-
-        t.test('with bad credentials', (assert) => {
-          server.inject({
-            url: '/api/users/1/tokens/active',
-          }, (response) => {
-            assert.equal(response.result.statusCode, 401, 'should return unauthorized response')
-            assert.end()
-          })
-        })
-      })
-
-      t.test('GET /users/current/tokens/inactive', (t) => {
-        t.test('with good credentials', (assert) => {
-          server.inject({
-            url: '/api/users/current/tokens/inactive',
-            headers,
-          }, (response) => {
-            const { inactiveTokens } = response.result.payload
-            assert.equal(Array.isArray(inactiveTokens), true, 'returns inactive tokens')
-            assert.equal(inactiveTokens.length === 0, true, 'no inactive tokens')
-            assert.end()
-          })
-        })
-
-        t.test('with bad credentials', (assert) => {
-          server.inject({
-            url: '/api/users/1/tokens/inactive',
-          }, (response) => {
-            assert.equal(response.result.statusCode, 401, 'should return unauthorized response')
-            assert.end()
-          })
-        })
-      })
+      // t.test('GET /users/current/tokens/active', (t) => {
+      //   t.test('with good credentials', (assert) => {
+      //     server.inject({
+      //       url: '/api/users/current/tokens/active',
+      //       headers,
+      //     }, (response) => {
+      //       const { activeTokens } = response.result.payload
+      //       assert.equal(Array.isArray(activeTokens), true, 'returns active tokens')
+      //       assert.equal(activeTokens.length >= 1, true, 'contains one or more tokens')
+      //       assert.end()
+      //     })
+      //   })
+      //
+      //   t.test('with bad credentials', (assert) => {
+      //     server.inject({
+      //       url: '/api/users/1/tokens/active',
+      //     }, (response) => {
+      //       assert.equal(response.result.statusCode, 401, 'should return unauthorized response')
+      //       assert.end()
+      //     })
+      //   })
+      // })
+      //
+      // t.test('GET /users/current/tokens/inactive', (t) => {
+      //   t.test('with good credentials', (assert) => {
+      //     server.inject({
+      //       url: '/api/users/current/tokens/inactive',
+      //       headers,
+      //     }, (response) => {
+      //       const { inactiveTokens } = response.result.payload
+      //       assert.equal(Array.isArray(inactiveTokens), true, 'returns inactive tokens')
+      //       assert.equal(inactiveTokens.length === 0, true, 'no inactive tokens')
+      //       assert.end()
+      //     })
+      //   })
+      //
+      //   t.test('with bad credentials', (assert) => {
+      //     server.inject({
+      //       url: '/api/users/1/tokens/inactive',
+      //     }, (response) => {
+      //       assert.equal(response.result.statusCode, 401, 'should return unauthorized response')
+      //       assert.end()
+      //     })
+      //   })
+      // })
 
       t.test('GET /users/{id}', (t) => {
         t.test('with good credentials', (assert) => {
