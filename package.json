@@ -76,7 +76,7 @@
     "eslint-plugin-jsx-a11y": "^3.0.0",
     "eslint-plugin-react": "^6.0.0",
     "istanbul": "^1.0.0-alpha.2",
-    "nock": "^8.0.0",
+    "nock": "^9.0.2",
     "nsp": "^2.5.0",
     "rimraf": "^2.5.2",
     "shrinkpack": "^0.17.0",
