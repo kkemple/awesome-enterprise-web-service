@@ -43,7 +43,7 @@
     "hapi": "^15.0.1",
     "hapi-auth-basic": "^4.2.0",
     "hapi-auth-jwt2": "^7.0.1",
-    "hapi-statsd": "^5.0.1",
+    "hapi-statsd": "^6.0.0",
     "hapi-swagger": "^7.0.1",
     "inert": "^4.0.0",
     "joi": "^10.0.0",
