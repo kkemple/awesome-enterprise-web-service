@@ -40,7 +40,7 @@
     "catbox-redis": "^2.0.2",
     "good": "^7.0.1",
     "good-console": "^6.1.2",
-    "hapi": "^15.0.1",
+    "hapi": "^16.0.1",
     "hapi-auth-basic": "^4.2.0",
     "hapi-auth-jwt2": "^7.0.1",
     "hapi-statsd": "^6.0.0",
