@@ -84,6 +84,6 @@
     "tape": "^4.6.0"
   },
   "optionalDependencies": {
-    "fsevents": "^1.0.12"
+    "fsevents": "^1.1.0"
   }
 }
