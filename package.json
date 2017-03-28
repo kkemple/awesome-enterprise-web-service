@@ -37,7 +37,7 @@
   "homepage": "https://github.com/awesome-enterprise-web-service#readme",
   "dependencies": {
     "bcryptjs": "^2.3.0",
-    "catbox-redis": "^2.0.2",
+    "catbox-redis": "^3.0.0",
     "good": "^7.0.1",
     "good-console": "^6.1.2",
     "hapi": "^16.0.3",
