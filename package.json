@@ -45,7 +45,7 @@
     "hapi-auth-jwt2": "^7.0.1",
     "hapi-statsd": "^6.0.0",
     "hapi-swagger": "^7.0.1",
-    "inert": "^4.0.0",
+    "inert": "^4.0.3",
     "joi": "^10.0.0",
     "jsonwebtoken": "^7.0.1",
     "lodash.assign": "^4.0.9",
